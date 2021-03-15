@@ -1,0 +1,35 @@
+version: '2'
+services:
+    platform-ms:
+      container_name: platform-ms
+      build:
+        context: .
+        dockerfile: platform/Dockerfile
+      image: ugromart/platform-ms
+      ports:
+        - 8081:8081
+      networks:
+        - ugromart-cloud-network
+    products-ms:
+      container_name: products-ms
+      build:
+        context: .
+        dockerfile: productsms/Dockerfile
+      image: ugromart/products-ms
+      ports:
+        - 8083:8083
+      networks:
+        - ugromart-cloud-network
+    orders-ms:
+      container_name: orders-ms
+      build:
+        context: .
+        dockerfile: ordersms/Dockerfile
+      image: ugromart/orders-ms
+      ports:
+        - 8082:8082
+      networks:
+        - ugromart-cloud-network
+networks:
+  ugromart-cloud-network:
+    driver: bridge
