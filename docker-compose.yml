@@ -1,48 +1,84 @@
 version: '2'
 services:
+    rabbitmq:
+      image: rabbitmq:3.7-management
+      container_name: rabbitmq
+      expose:
+        - 5672
+        - 15672
+      ports:
+        - 5672:5672
+        - 15672:15672
+    discovery:
+      container_name: discovery
+      build:
+        context: .
+        dockerfile: discovery/Dockerfile
+      image: ugromart/discovery
+      environment:
+        - JAVA_OPTS=
+          -DEUREKA_SERVER=http://discovery:8761/eureka
+      ports:
+        - 8761:8761
+
     platform-ms:
       container_name: platform-ms
       build:
         context: .
         dockerfile: gateway/Dockerfile
       image: gateway/platform-ms
-      restart: always
+      restart: on-failure
       environment:
-        PRODUCTS-MS-URL: products-ms:8083/productsms
-        ORDERS-MS-URL: order-ms:8082/ordersms
+        - JAVA_OPTS=
+          -DEUREKA_SERVER=http://discovery:8761/eureka
+#          -DPRODUCTS-MS-URL= products-ms:8083/productsms
+#          -DORDERS-MS-URL= order-ms:8082/ordersms
       depends_on:
         - products-ms
         - orders-ms
+        - discovery
+        - rabbitmq
       ports:
         - 8081:8081
-      networks:
-        - platform-ms-cloud-network
-        - products-ms-cloud-network
-        - orders-ms-cloud-network
+#      networks:
+#        - platform-ms-cloud-network
+#        - products-ms-cloud-network
+#        - orders-ms-cloud-network
     products-ms:
       container_name: products-ms
       build:
         context: .
         dockerfile: productsms/Dockerfile
       image: ugromart/products-ms
+      environment:
+        - JAVA_OPTS=
+          -DEUREKA_SERVER=http://discovery:8761/eureka
       ports:
         - 8083:8083
-      networks:
-        - products-ms-cloud-network
+#      networks:
+#        - products-ms-cloud-network
+      depends_on:
+        - discovery
     orders-ms:
       container_name: orders-ms
       build:
         context: .
         dockerfile: ordersms/Dockerfile
       image: ugromart/orders-ms
+      environment:
+        - JAVA_OPTS=
+          -DEUREKA_SERVER=http://discovery:8761/eureka
       ports:
         - 8082:8082
-      networks:
-        - orders-ms-cloud-network
-networks:
-  platform-ms-cloud-network:
-    driver: bridge
-  orders-ms-cloud-network:
-    driver: bridge
-  products-ms-cloud-network:
-    driver: bridge
+#      networks:
+#        - orders-ms-cloud-network
+      depends_on:
+        - discovery
+        - rabbitmq
+#networks:
+#  platform-ms-cloud-network:
+#    driver: bridge
+#  orders-ms-cloud-network:
+#    driver: bridge
+#  products-ms-cloud-network:
+#    driver: bridge
