@@ -6,13 +6,14 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class OrdersRestConnector {
-    @Value("${service.ordersms.url}")
+    @Value("service.ordersms.url")
     private String url;
     private RestTemplate restTemplate;
 
 
     public OrdersRestConnector(){
         this.restTemplate=new RestTemplate();
+//        url="http://"+System.getenv("ORDERS-MS-URL")+":8082/ordersms";
     }
 
     public <T> T get(Class<T> responseType, String endPoint){

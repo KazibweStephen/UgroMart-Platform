@@ -17,8 +17,8 @@ The api layer(gateway to the platform) is documentated using swagger2 and can be
 - [clone the repo(Switch to main branch, it is more stable)](https://github.com/KazibweStephen/UgroMart-Platform)
 - Ensure you have docker installed four your operating system type
 - cd in the root(Ugromart) folder with  your terminal or
-- run the following command in your terminal or console and run the code belo
-    ```docker-compose  up --build ```
+- run the following command in your terminal or console( You might need to run as root user or open command prompt as administrator)
+    ```              sh build-apps.sh           ```
     
 - Run rabitmq by changing the directory to in another tab of terminal as ```cd messaging-server```
 - Run the script start-servers as ```./start-servers.sh```. Remember to clean up by running ```./stop-servers.sh```
