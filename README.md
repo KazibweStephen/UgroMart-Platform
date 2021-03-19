@@ -10,6 +10,12 @@ UgroMart is a platform connecting customers to local market vendors. Users can s
  - Netflix Eureka for Service.
 Much as Java/SpringBoot is used, the platform microservices should be technology agnostic since RabitMq is hosted separately
 - The api is secured using JWT alongside spring security
+## High Level Architecture
+- Rest To Event Inititation
+![Rest To Event Inititation](https://github.com/KazibweStephen/UgroMart-Platform/blob/main/High%20Level%20Rest-To-Event.jpeg?raw=true)
+
+- Event Based Communication
+![Event Based Communication](https://github.com/KazibweStephen/UgroMart-Platform/blob/main/UgroMartArchitecture.jpeg?raw=true)
 
 ### Documentation
 The api layer(gateway to the platform) is documentated using swagger2 and can be accessed upon running this service on
