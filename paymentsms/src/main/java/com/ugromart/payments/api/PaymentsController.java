@@ -15,6 +15,6 @@ public class PaymentsController {
     private PaymentsService paymentsService;
     @GetMapping("/requestForPayment")
     public void requestForPayment(){
-        paymentsService.createApiUser();
+        paymentsService.getToken();
     }
 }
