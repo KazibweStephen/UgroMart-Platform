@@ -31,13 +31,21 @@ The api layer(gateway to the platform) is documentated using swagger2 and can be
 - [clone the repo(Switch to main branch, it is more stable)](https://github.com/KazibweStephen/UgroMart-Platform)
 - Change your directory to the root directory of the platform code(Ugromart folder) with  your terminal or Command Prompt
 - Run the following command in your terminal or console( You might need to run as root user or open command prompt as administrator)
-    ```              sh ./build-apps.sh           ``` and give some time for all the services to start
+```markdown
+sh ./build-apps.sh
+```
+  and give some time for all the services to start
 - Check the status of the services as registered by Eureka here (http://localhost:8761/)
 ![Registered Services Diagram](https://github.com/KazibweStephen/UgroMart-Platform/blob/main/Eureka%20Services%20registered.png?raw=true)
 
 - Refer to the [Swagger Documentation](http://localhost:8081/swagger-ui/) http://localhost:8081/swagger-ui/  for how to use the rest api
 
+### Alternate Run 
+ You can also change directory to each service's root directory with a separate Terminal and run
+ ```markdown
+./mvnw clean package spring-boot:run -DskipTests=true 
 
+```
 ### API Usage
 - An [Ugromat Postman Request collection](https://www.getpostman.com/collections/1b162196438acbf176d0) has been added to the root of the project and can be downloaded here. 
 Import it and run the requests as numbered 
@@ -60,7 +68,7 @@ Import it and run the requests as numbered
 
 ### API USAGE 
 - Register your self as a User 
-```json
+```markdown
 url : http://localhost:8081/api/user/register
 Method : POST
 body: {
@@ -77,7 +85,7 @@ Headers:
 Content-Type: application/json
 ```
 - Login to get a toke to use for the rest of the requests. The response contains a token.
-```json
+```markdown
 url : http://localhost:8081/api/user/login
 Method : POST
 body: {
@@ -89,7 +97,7 @@ Headers:
   Content-Type: application/json
 ```
 - Sample Products and Venders are created at app initialization. Do fetch these to enable contruction of order creation body.
-```json
+```markdown
 url : http://localhost:8081/api/products/
 Method : GET
 
@@ -99,7 +107,7 @@ Headers:
 
 ```
 
-```json
+```markdown
 url : http://localhost:8081/api/products/
 Method : GET
 
@@ -109,7 +117,7 @@ Headers:
 
 ```
 - Create as order via
-```json
+```markdown
 url : http://localhost:8081/api/order/create
 Method : POST
 body: {
@@ -136,7 +144,7 @@ Headers:
   Content-Type: application/json
 ```
 - Query for users orders for status
-```json
+```markdown
 url : http://localhost:8081/api/order/{userId}
 Method : GET
 
