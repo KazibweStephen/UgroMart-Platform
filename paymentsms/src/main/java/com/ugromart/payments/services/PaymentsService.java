@@ -45,12 +45,12 @@ public class PaymentsService {
         addCommonHeaders();
         String paymentReferenceId=UUID.randomUUID().toString();
         log.info("Payment ReferenceId: "+paymentReferenceId);//Payment Reference Id, for querying later
-        headers.set("X-Reference-Id", XReferenceId);
+        headers.set("X-Reference-Id", paymentReferenceId);
         headers.set("X-Target-Environment", "sandbox");
         headers.set("Authorization","Bearer "+access_token);
         MomoPayement payment= new MomoPayement(
                 paymentRequest.getTotalOrder().getAmount().doubleValue(),
-                "EUR", paymentReferenceId,
+                "EUR", "UGROMAT_ORDERS",
                 "Test payment for orders",
                 "Test payment for orders",
                 "msisdn",

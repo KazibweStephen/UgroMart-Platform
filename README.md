@@ -26,22 +26,49 @@ The api layer(gateway to the platform) is documentated using swagger2 and can be
 - [Install Docker](https://docs.docker.com/docker-for-mac/install/)
 - [Install Docker Compose, for non Mac Users](https://docs.docker.com/compose/install/)
 - [Install Postman](https://www.postman.com/downloads/)
+- [Install Maven](https://maven.apache.org/install.html)
 
 - [clone the repo(Switch to main branch, it is more stable)](https://github.com/KazibweStephen/UgroMart-Platform)
 - Change your directory to the root directory of the platform code(Ugromart folder) with  your terminal or Command Prompt
 - Run the following command in your terminal or console( You might need to run as root user or open command prompt as administrator)
     ```              sh ./build-apps.sh           ``` and give some time for all the services to start
-- Check the status of the services as registered by Eureka herehttp://localhost:8761/
+- Check the status of the services as registered by Eureka here (http://localhost:8761/)
 - Refer to the [Swagger Documentation](http://localhost:8081/swagger-ui/) http://localhost:8081/swagger-ui/  for how to use the rest api
 
-### API usage
+
+### API Usage
+- An [Ugromat Postman Request collection](https://www.getpostman.com/collections/1b162196438acbf176d0) has been added to the root of the project and can be downloaded here. 
+Import it and run the requests as numbered 
+1- Register Customer , 2-Customer Login etc.
+
+- Not the for testing purposes each service uses and H2 database that looses data on restart of the service.
+#### Order Payments Test Numbers
+- An MTN momo pay sandbox has been used and for testing purposes, When creating customer, we cna use the following
+ phone numbers to test out comes.
+ 
+ 
+ |Number  |	Response |
+ | :---:  | :---:
+ | 46733123450 |	failed  |
+ | 46733123451 |	rejected|
+ | 46733123452 |	timeout |
+ | 46733123453 |	ongoing(will answer pending first and if requested again after 30 seconds it will respond success)|
+ | 46733123454 | pending |
+
+### API USAGE 
 - Register your self as a User 
 ```json
 url : http://localhost:8081/api/user/register
 Method : POST
 body: {
-       "username":"kstephen6@gmail.com",
-       "password":"12345"
+        "id": 0,
+        "username": "...",
+        "password": "12345",
+        "passwordConfirm": "12345",
+        "customerPhoneNumber": "...",
+        "customerEmail": "...",
+        "customerFullName": "...",
+        "roles": []
       }
 Headers:
 Content-Type: application/json
@@ -51,8 +78,9 @@ Content-Type: application/json
 url : http://localhost:8081/api/user/login
 Method : POST
 body: {
-       "username":"kstephen6@gmail.com",
-       "password":"12345"
+      
+          "username":"...",
+          "password":"12345"
       }
 Headers:
   Content-Type: application/json
@@ -82,9 +110,9 @@ Headers:
 url : http://localhost:8081/api/order/create
 Method : POST
 body: {
-        "orderId": 0,
-        "userId": 1,
-        "orderDate": "2021-03-12",
+        "orderId": "",
+        "userId": 2,
+        "orderDate": "2021-03-20",
         "totalOrder": {
           "amount": 12000.00
         },

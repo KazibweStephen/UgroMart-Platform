@@ -13,8 +13,9 @@ The api layer(gateway to the platform) is documentated using swagger2 and can be
 
 ### Setup
 - [Install Java 8 or above](https://java.com/en/download/help/download_options.html) 
+- [Install Maven](https://maven.apache.org/install.html)
 
-- clone the repo(Switch to master branch, it is more stable)
+- clone the repo(Switch to main branch, it is more stable)
 
 - cd in the root folder of the app in your terminal or
 - run the following command in your terminal or console
@@ -29,6 +30,25 @@ For further reference, please consider the following sections:
 * [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.5.0-M2/maven-plugin/reference/html/#build-image)
 * [Spring Security](https://docs.spring.io/spring-boot/docs/2.4.3/reference/htmlsingle/#boot-features-security)
 * [Spring for RabbitMQ](https://docs.spring.io/spring-boot/docs/2.4.3/reference/htmlsingle/#boot-features-amqp)
+### API Usage
+- An [Ugromat Postman Request collection](https://www.getpostman.com/collections/1b162196438acbf176d0) has been added to the root of the project and can be downloaded here. 
+Import it and run the requests as numbered 
+1- Register Customer , 2-Customer Login etc.
+
+- Not the for testing purposes each service uses and H2 database that looses data on restart of the service.
+#### Order Payments Test Numbers
+- An MTN momo pay sandbox has been used and for testing purposes, When creating customer, we cna use the following
+ phone numbers to test out comes.
+ 
+ 
+ |Number  |	Response |
+ | :---:  | :---:
+ | 46733123450 |	failed  |
+ | 46733123451 |	rejected|
+ | 46733123452 |	timeout |
+ | 46733123453 |	ongoing(will answer pending first and if requested again after 30 seconds it will respond success)|
+ | 46733123454 | pending |
+
 
 ### Guides
 The following guides illustrate how to use some features concretely:

@@ -31,7 +31,7 @@ services:
       environment:
         - JAVA_OPTS=
           -DEUREKA_SERVER=http://discovery:8761/eureka
-          -DRABBIT_HOST=rabbit
+          -DRABBIT_HOST=rabbitmq
 #          -DPRODUCTS-MS-URL= products-ms:8083/productsms
 #          -DORDERS-MS-URL= order-ms:8082/ordersms
       depends_on:
@@ -54,7 +54,7 @@ services:
       environment:
         - JAVA_OPTS=
           -DEUREKA_SERVER=http://discovery:8761/eureka
-          -DRABBIT_HOST=rabbit
+          -DRABBIT_HOST=rabbitmq
       ports:
         - 8083:8083
 #      networks:
@@ -70,7 +70,7 @@ services:
       environment:
         - JAVA_OPTS=
           -DEUREKA_SERVER=http://discovery:8761/eureka
-          -DRABBIT_HOST=rabbit
+          -DRABBIT_HOST=rabbitmq
       ports:
         - 8082:8082
 #      networks:
@@ -87,7 +87,7 @@ services:
       environment:
         - JAVA_OPTS=
           -DEUREKA_SERVER=http://discovery:8761/eureka
-          -DRABBIT_HOST=rabbit
+          -DRABBIT_HOST=rabbitmq
       ports:
         - 8084:8084
       #      networks:
