@@ -42,6 +42,7 @@ The api layer(gateway to the platform) is documentated using swagger2 and can be
 - An [Ugromat Postman Request collection](https://www.getpostman.com/collections/1b162196438acbf176d0) has been added to the root of the project and can be downloaded here. 
 Import it and run the requests as numbered 
 1- Register Customer , 2-Customer Login etc.
+- An email will be sent out upon payment Success or Failure(test with number below)
 
 - Not the for testing purposes each service uses and H2 database that looses data on restart of the service.
 #### Order Payments Test Numbers
@@ -64,12 +65,12 @@ url : http://localhost:8081/api/user/register
 Method : POST
 body: {
         "id": 0,
-        "username": "...",
-        "password": "12345",
-        "passwordConfirm": "12345",
-        "customerPhoneNumber": "...",
-        "customerEmail": "...",
-        "customerFullName": "...",
+        "username": "...",[Required]
+        "password": "12345",[Required]
+        "passwordConfirm": "12345",[Required]
+        "customerPhoneNumber": "...",[Required]
+        "customerEmail": "...",[Required]
+        "customerFullName": "...",[Required]
         "roles": []
       }
 Headers:
@@ -81,8 +82,8 @@ url : http://localhost:8081/api/user/login
 Method : POST
 body: {
       
-          "username":"...",
-          "password":"12345"
+          "username":"...",[Required]
+          "password":"12345"[Required]
       }
 Headers:
   Content-Type: application/json
@@ -113,10 +114,10 @@ url : http://localhost:8081/api/order/create
 Method : POST
 body: {
         "orderId": "",
-        "userId": 2,
-        "orderDate": "2021-03-20",
+        "userId": 2, [Required]
+        "orderDate": "2021-03-20", [Required]
         "totalOrder": {
-          "amount": 12000.00
+          "amount": 12000.00 [Required]
         },
         "status": "",
         "orderItems": [
@@ -129,7 +130,7 @@ body: {
                 "quantity": 3
             }
          
-        ]
+        ]   [Required]
       }
 Headers:
   Content-Type: application/json
