@@ -2,6 +2,7 @@ package com.ugromart.platform.user;
 
 
 import com.ugromart.platform.Security.JwtTokenUtil;
+import com.ugromart.platform.configuration.InternalServerError;
 import com.ugromart.platform.configuration.NotFoundException;
 import com.ugromart.platform.user.models.Auth;
 import com.ugromart.platform.user.models.User;
@@ -18,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.NonUniqueResultException;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +44,18 @@ public class UserController {
     //private UserViewMapper userViewMapper;
 
     @PostMapping("/register")
-    public ResponseEntity<UserCreateResponse> register(@RequestBody User user){
+    public ResponseEntity<UserCreateResponse> register(@Valid @RequestBody User user){
         userService.save(user);
-        User result =userService.findByUsername(user.getUsername());
-        return  ResponseEntity.ok().body(new UserCreateResponse(result.getUsername(),result.getId()));
+        try {
+            User result =userService.findByUsername(user.getUsername());
+            if(result==null){
+                throw new InternalServerError(String.format("User with username {} already exists",user.getUsername()));
+            }
+            return  ResponseEntity.ok().body(new UserCreateResponse(result.getUsername(),result.getId()));
+        }catch (NonUniqueResultException ex){
+            throw new InternalServerError(String.format("User with username {} already exists {}",user.getUsername(),ex.getMessage()));
+        }
+
     }
     @PostMapping("/login")
     public ResponseEntity<Auth> login(@RequestBody @Valid UserLogin user){

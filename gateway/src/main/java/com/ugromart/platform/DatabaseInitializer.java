@@ -12,9 +12,15 @@ public class DatabaseInitializer implements CommandLineRunner {
     private UserService userService;
     @Override
     public void run(String... args) throws Exception {
+
         User user =new User();
-        user.setUsername("kstephen4@gmail.com");
+        user.setUsername("kstephen3@gmail.com");
         user.setPassword("12345");
+        user.setCustomerEmail("kstephen3@gmail.com");
+        user.setCustomerFullName("Stephen Kazibwe");
+        user.setPasswordConfirm("12345");
+        user.setCustomerPhoneNumber("0782832711");
+
         userService.save(user);
  }
 }

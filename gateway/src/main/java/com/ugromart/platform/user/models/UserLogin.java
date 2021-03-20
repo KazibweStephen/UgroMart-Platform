@@ -1,10 +1,12 @@
 package com.ugromart.platform.user.models;
 
 
-
+import javax.validation.constraints.NotBlank;
 
 public class UserLogin {
+    @NotBlank(message = "username is required")
     private  String username;
+    @NotBlank(message = "password is required")
     private String password;
 
     public UserLogin() {

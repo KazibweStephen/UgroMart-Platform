@@ -1,11 +1,12 @@
 package com.ugromart.platform.order.Service;
 
 import com.ugromart.platform.configuration.UserNotFoundException;
-import com.ugromart.platform.order.models.Order;
 import com.ugromart.platform.order.OrderProcessor;
 import com.ugromart.platform.order.OrderStatus;
 import com.ugromart.platform.order.exceptions.OrderValidationException;
 import com.ugromart.platform.order.exceptions.ProductNotFoundException;
+import com.ugromart.platform.order.models.CreateOrderRequest;
+import com.ugromart.platform.order.models.Order;
 import com.ugromart.platform.order.models.OrderItem;
 import com.ugromart.platform.product.models.Product;
 import com.ugromart.platform.product.services.ProductsRestService;
@@ -19,6 +20,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -39,7 +41,7 @@ public class OrderService {
         this.orderProcessor=orderProcessor;
     }
 
-    public void validateOrder(Order order){
+    public void validateOrder(CreateOrderRequest order){
         User user =userService.findUserById(order.getUserId());
         if(user==null){
                 throw new UserNotFoundException(String.format("User with id {} not found",order.getUserId()));
@@ -62,10 +64,21 @@ public class OrderService {
 
     }
     //@StreamListener(OrderProcessor.ORDERS_IN)
-    public void checkAndPublishOrder(Order order){
-        log.info("Order Created for customerId: {} worth {}",order.getUserId(),order.getTotalOrder().getAmount());
-        order.setStatus(OrderStatus.PLACED.name());
+    public CreateOrderRequest checkAndPublishOrder(CreateOrderRequest orderRequest){
+        log.info("Order Created for customerId: {} worth {}",orderRequest.getUserId(),orderRequest.getTotalOrder().getAmount());
+        User user=userService.findUserById(orderRequest.getUserId());
+        log.info("User fetehed from db: "+user.toString());
+        Order order= new Order(UUID.randomUUID().toString(),user.getId(),orderRequest.getOrderDate(),orderRequest.getTotalOrder(),orderRequest.getStatus(),
+                user.getCustomerPhoneNumber(),user.getCustomerEmail(),user.getCustomerFullName(),orderRequest.getOrderItems());
+       //Publish order to be placed and credited
+        orderRequest.setCustomerEmail(user.getCustomerEmail());
+        //change order status
+        orderRequest.setStatus(OrderStatus.PLACED.name());
+        orderRequest.setOrderId(order.getOrderId());
+        orderRequest.setCustomerEmail(user.getCustomerEmail());
         orderProcessor.sourceOfOrders().send(message(order));
+
+        return orderRequest;
     }
 
     private static final <T> Message<T> message(T val){ return MessageBuilder.withPayload(val).build();

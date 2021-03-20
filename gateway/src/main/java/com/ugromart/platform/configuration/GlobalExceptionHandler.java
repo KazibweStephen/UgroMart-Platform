@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -27,7 +28,7 @@ import static java.util.Optional.ofNullable;
 
 @RestController
 @ControllerAdvice
-public class GlobalExceptionHandler  {
+public abstract class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private final Logger logger = LogManager.getLogger();
 
     @ExceptionHandler(NotFoundException.class)
@@ -48,8 +49,9 @@ public class GlobalExceptionHandler  {
                 .body(new ApiCallError<>("Validation exception", List.of(ex.getMessage())));
     }
 
+
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<ApiCallError<String>> handleMissingServletRequestParameterException(HttpServletRequest request, MissingServletRequestParameterException ex) {
+    public ResponseEntity<ApiCallError<String>> handleMissingServletRequestParameterException(MissingServletRequestParameterException ex, HttpHeaders headers,HttpStatus status, HttpServletRequest request) {
         logger.error("handleMissingServletRequestParameterException {}\n", request.getRequestURI(), ex);
 
         return ResponseEntity

@@ -1,31 +1,37 @@
 package com.ugromart.platform.order.models;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
-
-public class Order {
+public class CreateOrderRequest {
     private String orderId;
     private long userId;
+    @NotBlank(message = "orderDate is required")
     private String orderDate;
     private Money totalOrder;
     private  String status;
-    private String customerPhoneNumber;
-    private String customerEmail;
-    private String customerName;
+    private  String customerEmail;
     private List<OrderItem> orderItems;
 
-    public Order() {
+    public CreateOrderRequest() {
     }
 
-    public Order(String orderId, long userId, String orderDate, Money totalOrder, String status, String customerPhoneNumber, String customerEmail, String customerName, List<OrderItem> orderItems) {
+    public CreateOrderRequest(String orderId, long userId, String orderDate, Money totalOrder, String status, List<OrderItem> orderItems) {
         this.orderId = orderId;
         this.userId = userId;
         this.orderDate = orderDate;
         this.totalOrder = totalOrder;
         this.status = status;
-        this.customerPhoneNumber = customerPhoneNumber;
+        this.orderItems = orderItems;
+    }
+
+    public CreateOrderRequest(String orderId, long userId, String orderDate, Money totalOrder, String status, String customerEmail, List<OrderItem> orderItems) {
+        this.orderId = orderId;
+        this.userId = userId;
+        this.orderDate = orderDate;
+        this.totalOrder = totalOrder;
+        this.status = status;
         this.customerEmail = customerEmail;
-        this.customerName = customerName;
         this.orderItems = orderItems;
     }
 
@@ -69,22 +75,6 @@ public class Order {
         this.status = status;
     }
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
-
-    public String getCustomerPhoneNumber() {
-        return customerPhoneNumber;
-    }
-
-    public void setCustomerPhoneNumber(String customerPhoneNumber) {
-        this.customerPhoneNumber = customerPhoneNumber;
-    }
-
     public String getCustomerEmail() {
         return customerEmail;
     }
@@ -93,11 +83,11 @@ public class Order {
         this.customerEmail = customerEmail;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 }

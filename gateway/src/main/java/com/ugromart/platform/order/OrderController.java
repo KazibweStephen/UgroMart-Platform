@@ -4,6 +4,7 @@ import com.ugromart.platform.configuration.UserNotFoundException;
 import com.ugromart.platform.order.Service.OrderService;
 import com.ugromart.platform.order.exceptions.OrderValidationException;
 import com.ugromart.platform.order.exceptions.ProductNotFoundException;
+import com.ugromart.platform.order.models.CreateOrderRequest;
 import com.ugromart.platform.order.models.Order;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.hibernate.service.spi.ServiceException;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,10 +27,9 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/create")
-    public ResponseEntity<Order> placeOrder(@RequestBody Order order){
-         orderService.validateOrder(order);
-         orderService.checkAndPublishOrder(order);
-         order.setStatus(OrderStatus.PLACED.name());
+    public ResponseEntity<CreateOrderRequest> placeOrder( @Valid @RequestBody CreateOrderRequest orderRequest){
+         orderService.validateOrder(orderRequest);
+         CreateOrderRequest order= orderService.checkAndPublishOrder(orderRequest);
          return ResponseEntity.ok(order);
     }
 
