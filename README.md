@@ -33,6 +33,8 @@ The api layer(gateway to the platform) is documentated using swagger2 and can be
 - Run the following command in your terminal or console( You might need to run as root user or open command prompt as administrator)
     ```              sh ./build-apps.sh           ``` and give some time for all the services to start
 - Check the status of the services as registered by Eureka here (http://localhost:8761/)
+![Registered Services Diagram](https://github.com/KazibweStephen/UgroMart-Platform/blob/main/Eureka%20Services%20registered.png?raw=true)
+
 - Refer to the [Swagger Documentation](http://localhost:8081/swagger-ui/) http://localhost:8081/swagger-ui/  for how to use the rest api
 
 
