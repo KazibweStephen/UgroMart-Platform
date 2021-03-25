@@ -1,0 +1,3 @@
+[submodule "productsms"]
+	path = productsms
+	url = https://github.com/KazibweStephen/UgromartOrder-MS
