@@ -1,3 +1,6 @@
 [submodule "ordersms"]
 	path = ordersms
 	url = https://github.com/KazibweStephen/UgromartOrder-MS
+[submodule "productsms"]
+	path = productsms
+	url = https://github.com/KazibweStephen/Product-MS
